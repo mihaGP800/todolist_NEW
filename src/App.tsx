@@ -23,16 +23,25 @@ function App() {
     ])
 
     let [textInput, setTextInput] = useState<string>('')
+    let [error, setError] = useState<boolean>(false)
 
     const addTask = () => {
-        textInput.trim() !== '' &&
-        setTasks([{id: v1(), title: textInput, isDone: false}, ...tasks])
+        const textInputTrim = textInput.trim()
+        if (textInputTrim !== '') {
+            setTasks([{id: v1(), title: textInputTrim, isDone: false}, ...tasks])
+        } else {
+            setError(true)
+        }
         setTextInput('')
     }
 
     const deleteTask = (id: string) => {
         const tasksAfterFilter = tasks.filter(task => task.id !== id)
         setTasks(tasksAfterFilter)
+    }
+
+    const changeStatus = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === id ? {...t, isDone: isDone} : t))
     }
 
     let [filter, setFilter] = useState<filterType>('all')
@@ -56,8 +65,15 @@ function App() {
     return (
         <div>
             <Header filter={filter} title={'My tasks for a day'}/>
-            <Input addTask={addTask} textInput={textInput} setTextInput={setTextInput}/>
-            <TaskList tasks={tasksAfterFilteredTasks} deleteTask={deleteTask}/>
+            <Input addTask={addTask}
+                   textInput={textInput}
+                   setTextInput={setTextInput}
+                   setError={setError}
+                   error={error}/>
+            <TaskList changeStatus={changeStatus}
+                      tasks={tasksAfterFilteredTasks}
+                      deleteTask={deleteTask}
+                      filter={filter}/>
             <FilterPanel filter={filter} changeFilter={changeFilter}/>
         </div>
     );
