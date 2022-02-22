@@ -1,0 +1,12 @@
+.filter {
+    border-radius: 50%;
+    display: inline-block;
+    min-width: 160px;
+    text-align: center;
+    margin-left: 5px;
+    background-color: darkcyan;
+    color: white;
+
+
+
+}

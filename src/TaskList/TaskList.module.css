@@ -1,0 +1,10 @@
+.buttonRemove{
+    margin-left: 3px;
+    padding: 2px ;
+    text-align: center;
+    font-size: 10px;
+    background-color: rgb(192, 32, 32);
+    border-radius: 50%;
+    font-weight: bold;
+    color: white;
+}
