@@ -14,7 +14,7 @@ export const FilterPanel: React.FC<FilterPanelType> = ({changeFilter, filter, ..
     const callback3 = () => changeFilter('completed');
     return (
         <>
-            <Button className={filter === 'all' ? s.active : s.passive} name={'ALL'} callback={callback1}/>
+            <Button className={filter === 'all' ? s.active : s.passive} name={'ALL'} callback={() => changeFilter('all')}/>
             <Button className={filter === 'active' ? s.active : s.passive} name={'Active'} callback={callback2}/>
             <Button className={filter === 'completed' ? s.active : s.passive} name={'Completed'} callback={callback3}/>
         </>

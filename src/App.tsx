@@ -44,6 +44,7 @@ function App() {
         setTasks(tasks.map(t => t.id === id ? {...t, isDone: isDone} : t))
     }
 
+
     let [filter, setFilter] = useState<filterType>('all')
 
     const changeFilter = (filter: filterType) => {
