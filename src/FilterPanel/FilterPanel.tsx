@@ -6,6 +6,7 @@ import s from './FilterPanel.module.css'
 type FilterPanelType = {
     changeFilter: (filter: filterType) => void
     filter: filterType
+
 }
 
 export const FilterPanel: React.FC<FilterPanelType> = ({changeFilter, filter, ...props}) => {
