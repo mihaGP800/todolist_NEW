@@ -69,6 +69,8 @@ export function sumFirstNumbers(N: number): number {
     // return sum
 
     return [...Array(N)].reduce((acc, n, i) => acc + i + 1, 0)
+
+    return N == 0 ? 0 : N + sumFirstNumbers(N - 1)
 }
 
 // ...и "лапку" вверх!!!!
@@ -86,8 +88,8 @@ export function getBanknoteList(amountOfMoney: number): Array<number> {
     const banknotes = [1000, 500, 100, 50, 20, 10, 5, 2, 1]
     let result = []
     for (let i = 0; i < banknotes.length; i++) {
-        while (amountOfMoney - banknotes[i] >=0){
-            amountOfMoney -=banknotes[i]
+        while (amountOfMoney - banknotes[i] >= 0) {
+            amountOfMoney -= banknotes[i]
             result.push(banknotes[i])
         }
     }
