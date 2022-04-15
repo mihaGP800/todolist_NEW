@@ -3,28 +3,32 @@ import {Checkbox, IconButton} from '@material-ui/core';
 import {EditableSpan} from './EditableSpan';
 import {Delete} from '@material-ui/icons';
 import {TaskType} from './Todolist';
+import {useDispatch} from 'react-redux';
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
 
 type TaskPropsType = {
     task: TaskType
     todoListID: string
-    removeTask: (taskId: string, todolistId: string) => void
-    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
-    changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
+    // removeTask: (taskId: string, todolistId: string) => void
+    // changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
+    // changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
 }
 
-export const Task = React.memo(({task, todoListID, removeTask, changeTaskStatus, changeTaskTitle}: TaskPropsType) => {
+export const Task = React.memo(({task, todoListID}: TaskPropsType) => {
     console.log('Task')
 
-    const onClickHandler = useCallback(() => removeTask(task.id, todoListID), [removeTask, task.id, todoListID])
+    const dispatch = useDispatch()
+
+    const onClickHandler = useCallback(() =>dispatch(removeTaskAC(task.id, todoListID)), [dispatch, task.id, todoListID])
 
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        changeTaskStatus(task.id, newIsDoneValue, todoListID);
-    }, [changeTaskStatus, task.id, todoListID])
+        dispatch(changeTaskStatusAC(task.id, newIsDoneValue, todoListID));
+    }, [dispatch, task.id, todoListID])
 
     const onTitleChangeHandler = useCallback((newValue: string) => {
-        changeTaskTitle(task.id, newValue, todoListID);
-    }, [changeTaskTitle, task.id, todoListID])
+        dispatch(changeTaskTitleAC(task.id, newValue, todoListID));
+    }, [dispatch, task.id, todoListID])
 
 
     return <div key={task.id} className={task.isDone ? 'is-done' : ''}>

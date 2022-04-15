@@ -27,9 +27,9 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(({
-                                        removeTodolist, removeTask, addTask,
-                                        changeTodolistTitle, changeTaskTitle,
-                                        changeTaskStatus, changeFilter,
+                                        removeTodolist, addTask,
+                                        changeTodolistTitle,
+                                        changeFilter,
                                         filter, title, id, tasks
                                     }: PropsType) => {
 
@@ -65,9 +65,6 @@ export const Todolist = React.memo(({
             {
                 tasksForTodolist.map(t => <Task key={t.id}
                                                 task={t}
-                                                changeTaskStatus={changeTaskStatus}
-                                                changeTaskTitle={changeTaskTitle}
-                                                removeTask={removeTask}
                                                 todoListID={id}
                 />)
             }
