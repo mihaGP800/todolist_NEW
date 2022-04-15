@@ -54,6 +54,12 @@ export const Todolist = React.memo(({
     const onCompletedClickHandler = useCallback(() => changeFilter('completed', id), [changeFilter, id]);
 
 
+    const removeTaskHandler = useCallback((taskID: string) => removeTask(taskID, id), [removeTask, id])
+
+    const changeTaskStatusHandler = useCallback((taskID: string, isDone: boolean) => changeTaskStatus(taskID, isDone, id), [changeTaskStatus, id])
+
+    const changeTaskTitleHandler = useCallback((taskID: string, newTitle: string) => changeTaskTitle(taskID, newTitle, id), [changeTaskTitle, id])
+
     return <div>
         <h3><EditableSpan value={title} onChange={changeTodolistTitleHandler}/>
             <IconButton onClick={removeTodolistHandler}>
@@ -65,10 +71,10 @@ export const Todolist = React.memo(({
             {
                 tasksForTodolist.map(t => <Task key={t.id}
                                                 task={t}
-                                                changeTaskStatus={changeTaskStatus}
-                                                changeTaskTitle={changeTaskTitle}
-                                                removeTask={removeTask}
-                                                todoListID={id}
+                                                changeTaskStatus={changeTaskStatusHandler}
+                                                changeTaskTitle={changeTaskTitleHandler}
+                                                removeTask={removeTaskHandler}
+                    // todoListID={id}
                 />)
             }
         </div>
