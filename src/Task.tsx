@@ -4,7 +4,14 @@ import {EditableSpan} from './EditableSpan';
 import {Delete} from '@material-ui/icons';
 import {TaskType} from './Todolist';
 import {useDispatch} from 'react-redux';
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
+import {
+    changeTaskStatusAC,
+    ChangeTaskStatusActionType,
+    changeTaskTitleAC, ChangeTaskTitleActionType,
+    removeTaskAC,
+    RemoveTaskActionType
+} from './state/tasks-reducer';
+import {Dispatch} from 'redux';
 
 type TaskPropsType = {
     task: TaskType
@@ -17,9 +24,9 @@ type TaskPropsType = {
 export const Task = React.memo(({task, todoListID}: TaskPropsType) => {
     console.log('Task')
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<Dispatch<RemoveTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType>>()
 
-    const onClickHandler = useCallback(() =>dispatch(removeTaskAC(task.id, todoListID)), [dispatch, task.id, todoListID])
+    const onClickHandler = useCallback(() => dispatch(removeTaskAC(task.id, todoListID)), [dispatch, task.id, todoListID])
 
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
