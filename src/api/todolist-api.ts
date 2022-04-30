@@ -12,11 +12,39 @@ type TodolistType = {
     order: number
     title: string
 }
-type EditToDoType<D = {}> = {
+type TaskType = {
+    id: string
+    title: string
+    description: string
+    todoListId: string
+    order: number
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    addedDate: string
+}
+
+type ResponseType<D = {}> = {
     data: D
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
+}
+
+type TasksType = {
+    items: TaskType[];
+    totalCount: number;
+    error: string | null;
+}
+
+export type UpdateTaskPropertiesType = {
+    title: string
+    description: string
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
 }
 
 export const TodolistAPI = {
@@ -25,17 +53,32 @@ export const TodolistAPI = {
         .then(res => res.data),
 
     createToDo: (title: string) => instance
-        .post<any, AxiosResponse<EditToDoType<{ item: TodolistType }>>, { title: string }>
+        .post<any, AxiosResponse<ResponseType<{ item: TodolistType }>>, { title: string }>
         ('todo-lists', {title})
         .then(res => res.data),
 
     deleteToDo: (todolistId: string) => instance
-        .delete<EditToDoType>(`todo-lists/${todolistId}`)
+        .delete<ResponseType>(`todo-lists/${todolistId}`)
         .then(res => res.data),
 
     updateToDo: (todolistId: string, title: string) => instance
-        .put<EditToDoType>(`todo-lists/${todolistId}`, {title})
+        .put<ResponseType>(`todo-lists/${todolistId}`, {title})
+        .then(res => res.data),
+
+    getTasks: (todolistId: string) => instance
+        .get<TasksType>(`todo-lists/${todolistId}/tasks`)
+        .then(res => res.data),
+
+    createTask: (todolistId: string, title: string) => instance
+        .post<ResponseType<{ item: TaskType }>>
+        (`todo-lists/${todolistId}/tasks`, {title})
+        .then(res => res.data),
+
+    deleteTask: (todolistId: string, taskId: string) => instance
+        .delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        .then(res => res.data),
+
+    updateTask: (todolistId: string, taskId: string, updateTask: UpdateTaskPropertiesType) => instance
+        .put<any, AxiosResponse<ResponseType<{ item: TaskType }>>, UpdateTaskPropertiesType>(`todo-lists/${todolistId}/tasks/${taskId}`, updateTask)
         .then(res => res.data)
-
-
 }
