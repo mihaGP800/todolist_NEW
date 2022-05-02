@@ -22,7 +22,7 @@ export const CreateTodolist = () => {
     const [title, setTitle] = useState('')
 
     const onClickHandler = () =>
-        TodolistAPI.createToDo(title).then(data => setState(data))
+        TodolistAPI.createToDo(title).then(data => setState(data.data))
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
         setTitle(e.currentTarget.value)
@@ -30,7 +30,7 @@ export const CreateTodolist = () => {
 
     return <div> {JSON.stringify(state)}
         <div>
-            <input value={title} onChange={onChangeHandler}/>
+            <input placeholder={'Title'} value={title} onChange={onChangeHandler}/>
             <button onClick={onClickHandler}>Add</button>
         </div>
     </div>

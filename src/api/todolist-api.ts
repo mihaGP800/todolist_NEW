@@ -25,6 +25,12 @@ type TaskType = {
     addedDate: string
 }
 
+type TasksType = {
+    items: TaskType[];
+    totalCount: number;
+    error: string | null;
+}
+
 type ResponseType<D = {}> = {
     data: D
     resultCode: number
@@ -32,11 +38,6 @@ type ResponseType<D = {}> = {
     fieldsErrors: Array<string>
 }
 
-type TasksType = {
-    items: TaskType[];
-    totalCount: number;
-    error: string | null;
-}
 
 export type UpdateTaskPropertiesType = {
     title: string
