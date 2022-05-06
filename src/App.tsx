@@ -22,7 +22,7 @@ import {
 } from './state/todolists-reducer'
 import {
     addTasksTC,
-    changeTaskStatusAC,
+    changeTaskStatusAC, changeTaskStatusTC,
     changeTaskTitleAC,
     deleteTasksTC
 } from './state/tasks-reducer';
@@ -63,8 +63,9 @@ function App() {
     }, []);
 
     const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
-        const action = changeTaskStatusAC(id, status, todolistId);
-        dispatch(action);
+        // const action = changeTaskStatusAC(id, status, todolistId);
+        // dispatch(action);
+        dispatch(changeTaskStatusTC(todolistId, id, status))
     }, []);
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {

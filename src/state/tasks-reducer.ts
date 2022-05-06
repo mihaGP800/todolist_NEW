@@ -1,12 +1,17 @@
 import {TasksStateType} from '../App';
-import {v1} from 'uuid';
 import {
     AddTodolistActionType,
     RemoveTodolistActionType,
     setTodosACType
 } from './todolists-reducer';
-import {TaskPriorities, TaskStatuses, TaskType, todolistsAPI} from '../api/todolists-api'
+import {
+    TaskStatuses,
+    TaskType,
+    todolistsAPI,
+    UpdateTaskModelType
+} from '../api/todolists-api'
 import {Dispatch} from 'redux';
+import {AppRootStateType} from './store';
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK',
@@ -77,8 +82,10 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             // const stateCopy = {...state}
             // const tasks = stateCopy[action.newTask.todoListId];
             // return {...state, [action.newTask.todoListId]: [action.newTask, ...tasks]};
-            return {...state,
-                [action.newTask.todoListId]: [action.newTask, ...state[action.newTask.todoListId]]}
+            return {
+                ...state,
+                [action.newTask.todoListId]: [action.newTask, ...state[action.newTask.todoListId]]
+            }
 
         }
         case 'CHANGE-TASK-STATUS': {
@@ -166,4 +173,26 @@ export const addTasksTC = (todolistId: string, title: string) => {
             })
     }
 }
+export const changeTaskStatusTC = (todolistId: string, taskId: string, status: TaskStatuses) => {
+    return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+        const currentTask = getState().tasks[todolistId].find(t => t.id === taskId)
+        if (currentTask) {
+            const model: UpdateTaskModelType = {
+                title: currentTask.title,
+                deadline: currentTask.deadline,
+                description: currentTask.description,
+                priority: currentTask.priority,
+                startDate: currentTask.startDate,
+                status,
+            }
+            todolistsAPI.updateTask(todolistId, taskId, model)
+                .then((res) => {
+
+                    dispatch(changeTaskStatusAC(taskId, status, todolistId))
+                })
+        }
+    }
+}
+
+
 
