@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -67,16 +67,17 @@ export enum TaskPriorities {
 }
 
 export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
     id: string
     todoListId: string
     order: number
     addedDate: string
+
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
 }
 export type UpdateTaskModelType = {
     title: string
